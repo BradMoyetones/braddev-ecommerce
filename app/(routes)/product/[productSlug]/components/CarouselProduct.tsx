@@ -20,7 +20,7 @@ export default function CarouselProduct(props: CarouselProductProps) {
             <Carousel>
                 <CarouselContent>
                     {images.data.map((image) => (
-                        <CarouselItem key={image.id}>
+                        <CarouselItem key={image.id} className="flex items-center justify-center">
                             <img 
                                 src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${image.attributes.url}`} 
                                 alt="Image Product" 
@@ -29,8 +29,8 @@ export default function CarouselProduct(props: CarouselProductProps) {
                         </CarouselItem>
                     ))}
                 </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
+                <CarouselPrevious className="hidden sm:flex" />
+                <CarouselNext className="hidden sm:flex" />
 
             </Carousel>
         </div>

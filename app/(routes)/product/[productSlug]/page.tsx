@@ -19,13 +19,13 @@ export default function Page() {
     }
 
     return (
-        <div className="max-w-6xl py-4 mx-auto sm:py-32 sm:px-24">
-            <div className="grid sm:grid-cols-2 ">
-                <div>
+        <div className="max-w-6xl py-4 mx-auto min-h-[613px] flex items-center justify-center">
+            <div className="grid md:grid-cols-2 gap-4 h-full items-center">
+                <div className="px-4">
                     <CarouselProduct images={result[0].attributes.images} />
                 </div>
 
-                <div className="sm:px-12">
+                <div className="sm:px-4">
                     <InfoProduct product={result[0]} />
                 </div>
             </div>

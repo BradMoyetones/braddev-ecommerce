@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import NextTopLoader from 'nextjs-toploader';
 import { AuthProvider } from "@/context/AuthContext";
+import CarouselTextBanner from "@/components/CarruselTextBanner";
 
 const urbanist = Urbanist({ subsets: ["latin"] });
 
@@ -43,7 +44,10 @@ export default function RootLayout({
               shadow="0 0 10px #2299DD,0 0 5px #2299DD"
             />
             <Navbar />
-            {children}
+            <CarouselTextBanner />
+            <div className="min-h-[calc(100vh-84px-262px)]">
+              {children}
+            </div>
             <Toaster />
             <Footer />
           </ThemeProvider>

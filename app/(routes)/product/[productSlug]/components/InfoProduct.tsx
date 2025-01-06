@@ -18,9 +18,8 @@ export default function InfoProduct(props: InfoProductProps) {
     return (
         <div className="px-6">
             <div className="justify-between my-4 sm:flex">
-                <h1 className="text-2xl">{product.attributes.productName}</h1>
+                <h1 className="text-2xl mb-4 sm:mb-0">{product.attributes.productName}</h1>
                 <TasteOriginProduct taste={product.attributes.taste} origin={product.attributes.origin} />
-
             </div>
             <Separator className="my-4" />
             <p>

@@ -14,10 +14,12 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import { useRouter } from "next/navigation"
 
 
 
 const  MenuList = () => {
+    const router = useRouter()
     return (
         <NavigationMenu>
             <NavigationMenuList>
@@ -27,7 +29,7 @@ const  MenuList = () => {
                         <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                         <li className="row-span-3">
                             <NavigationMenuLink asChild>
-                            <a
+                            <Link
                                 className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                                 href="/"
                             >
@@ -37,7 +39,7 @@ const  MenuList = () => {
                                 <p className="text-sm leading-tight text-muted-foreground">
                                     Bienvenido a BradDev, donde la pasión por el café se encuentra con la excelencia en cada taza. Nuestro compromiso es ofrecerte una experiencia única, desde la selección de los mejores granos hasta la entrega de sabores excepcionales que deleitan tu paladar.
                                 </p>
-                            </a>
+                            </Link>
                             </NavigationMenuLink>
                         </li>
                         <ListItem href="/shop" title="Tienda">
@@ -60,20 +62,14 @@ const  MenuList = () => {
                             <ListItem
                             key={component.title}
                             title={component.title}
-                            href={component.href}
+                            onClick={() => router.push(component.href)}
+                            // href={component.href}
                             >
                             {component.description}
                             </ListItem>
                         ))}
                         </ul>
                     </NavigationMenuContent>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <Link href="/accesorios" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                            Accesorios
-                        </NavigationMenuLink>
-                    </Link>
                 </NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu>

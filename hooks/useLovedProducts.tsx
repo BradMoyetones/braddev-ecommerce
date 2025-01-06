@@ -10,35 +10,43 @@ interface UseLovedProductsType {
     removeLovedItem: (id: number) => void
 }
 
-
-export const useLovedProducts = create(persist<UseLovedProductsType>((set, get) => ({
-    lovedItems: [],
-    addLoveItem: (data: ProductType) => {
-        const currentLovedItems = get().lovedItems
-        const existingItem = currentLovedItems.find((item) => item.id === data.id)
-
-        if(existingItem){
+export const useLovedProducts = create(
+    persist<UseLovedProductsType>(
+      (set, get) => ({
+        lovedItems: [],
+        addLoveItem: (data: ProductType) => {
+          const currentLovedItems = get().lovedItems;
+          const exists = currentLovedItems.some((item) => item.id === data.id);
+  
+          if (exists) {
             return toast({
-                title: "El producto ya existe en la lista",
-                variant: "destructive"
-            })
-        }
-
-        set({
-            lovedItems: [...get().lovedItems, data]
-        })
-        toast({
-            title: "Producto añadido a la lista"
-        })
-    },
-    removeLovedItem: (id: number) => {
-        set({lovedItems: [...get().lovedItems.filter((item) => item.id !== id)]})
-        toast({
-            title: "Producto eliminado de la lista"
-        })
-    },
-    removeAll: () => set({ lovedItems: [] })
-}), {
-    name: "loved-products-storage",
-    storage: createJSONStorage(() => localStorage)
-}))
+              title: "El producto ya está en la lista de favoritos.",
+              variant: "destructive",
+            });
+          }
+  
+          set({ lovedItems: [...currentLovedItems, data] });
+          toast({
+            title: "Producto añadido a favoritos.",
+          });
+        },
+        removeLovedItem: (id: number) => {
+          set({ lovedItems: get().lovedItems.filter((item) => item.id !== id) });
+          toast({
+            title: "Producto eliminado de favoritos.",
+          });
+        },
+        removeAll: () => {
+          set({ lovedItems: [] });
+          toast({
+            title: "Todos los productos se eliminaron de favoritos.",
+          });
+        },
+      }),
+      {
+        name: "loved-products-storage",
+        storage: createJSONStorage(() => localStorage),
+      }
+    )
+  );
+  
