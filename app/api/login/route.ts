@@ -16,6 +16,8 @@ export async function POST(req: Request) {
         return NextResponse.json(response.data);
     } catch (error: any) {
         console.error('Login Error response:', error.response?.data); // Log para verificar errores
+        console.log(error);
+        
 
         const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
         return NextResponse.json({ error: errorMessage }, { status: error.response?.status || 500 });

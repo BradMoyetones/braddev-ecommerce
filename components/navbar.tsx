@@ -28,7 +28,7 @@ export default function Navbar() {
   const navigateTo = (path: string) => router.push(path);
 
   return (
-    <div className="w-full sticky top-0 bg-white backdrop-filter backdrop-blur-lg bg-opacity-30 z-50">
+    <div className="w-full sticky top-0 bg-white dark:bg-black backdrop-filter backdrop-blur-lg bg-opacity-30 dark:bg-opacity-30 z-50">
       <div className="flex items-center justify-between p-4 mx-auto cursor-pointer sm:max-w-4xl md:max-w-6xl ">
         <h1 className="text-3xl" onClick={() => navigateTo("/")}>
           Brad<span className="font-bold">Dev</span>

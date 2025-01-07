@@ -1,6 +1,8 @@
 "use client"
 // context/AuthContext.tsx
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import Cookies from 'js-cookie';
+import api from '@/config/clienteAxios';
 
 interface User {
   name: string;
@@ -10,39 +12,45 @@ interface User {
 
 interface AuthContextType {
     user: User | null;
-    isAuthenticated: boolean; // Nuevo campo para verificar si el usuario está autenticado
-    login: (userData: User) => void;
-    logout: () => void;
+    loading: boolean;
+    setUser: React.Dispatch<React.SetStateAction<User | null>>; // Exporta setUser
+    logout: () => void; // Añade la función logout en el contexto
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
-
+    const [loading, setLoading] = useState(true);
+    
     useEffect(() => {
-        // Recuperar el usuario del almacenamiento local si existe
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
+        const fetchUser = async () => {
+            const token = Cookies.get('token'); // Obtener el token de las cookies
+            if (token) {
+                try {
+                    const response = await api.get('/api/users/me'); // Usar Axios para la solicitud
+                    setUser(response.data);
+                } catch (error) {
+                    console.error('Error fetching user:', error);
+                    setUser(null);
+                }
+            }
+            setLoading(false);
+        };
+
+        fetchUser();
     }, []);
 
-    // Determinar si hay un usuario autenticado
-    const isAuthenticated = !!user;
-
-    const login = (userData: User) => {
-        setUser(userData);
-        localStorage.setItem('user', JSON.stringify(userData));
-    };
-
     const logout = () => {
+        // Elimina el token y el refreshToken de las cookies
+        Cookies.remove('token');
+        Cookies.remove('refreshToken');
+        // Actualiza el estado de usuario a null
         setUser(null);
-        localStorage.removeItem('user');
     };
 
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+        <AuthContext.Provider value={{ user, loading, setUser, logout }}>
             {children}
         </AuthContext.Provider>
     );
