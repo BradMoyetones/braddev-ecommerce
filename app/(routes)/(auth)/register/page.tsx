@@ -30,7 +30,7 @@ const formSchema = z.object({
 export default function RegisterPage() {
     const [error, setError] = useState<string>('');
     const router = useRouter();
-    const { isAuthenticated } = useAuth(); // Obtener funciones de autenticación del contexto
+    const { user } = useAuth(); // Obtener funciones de autenticación del contexto
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -64,7 +64,7 @@ export default function RegisterPage() {
             setError('Ocurrió un error inesperado. Por favor, inténtalo de nuevo.');
         }
     }
-    if (isAuthenticated) {
+    if (user) {
         router.push('/');
         return // Opcional: podrías mostrar un spinner de carga mientras se redirige
     }
