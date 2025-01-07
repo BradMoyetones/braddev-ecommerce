@@ -10,8 +10,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import axios from 'axios';
 import { useAuth } from "@/context/AuthContext";
+import api from "@/config/clienteAxios";
+import Cookies from 'js-cookie'; // Importa js-cookie
 
 const formSchema = z.object({
     username: z.string().nonempty({
@@ -22,10 +23,14 @@ const formSchema = z.object({
     }),
 });
 
+// Establece el tiempo de expiración en días
+const tokenExpirationDays = 0.25; // 6 horas en días (21600 segundos)
+
+
 export default function LoginPage() {
     const [error, setError] = useState<string>('');
     const router = useRouter();
-    const { login, isAuthenticated } = useAuth(); // Obtener funciones de autenticación del contexto
+    const { setUser, user } = useAuth(); // Obtener funciones de autenticación del contexto
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -39,14 +44,15 @@ export default function LoginPage() {
         setError(''); // Limpiar mensaje de error anterior
 
         try {
-            const response = await axios.post('/api/login', { // Ruta relativa al frontend para la API de login
-                username: values.username,
+            const response = await api.post('/api/auth/local', { // Ruta relativa al frontend para la API de login
+                identifier: values.username,
                 password: values.password,
             });
 
             if (response.status === 200) {
                 console.log('Login successful:', response.data);
-                login(response.data.user); // Guardar el usuario en el contexto de autenticación
+                Cookies.set('token', response.data.jwt, { path: '/', secure: true, sameSite: 'lax', expires: tokenExpirationDays });
+                setUser(response.data.user); // Guardar el usuario en el contexto de autenticación
                 router.push('/'); // Redirigir a la página principal después del inicio de sesión
             } else {
                 console.error('Login error:', response.data);
@@ -59,7 +65,7 @@ export default function LoginPage() {
     }
 
     // Redirigir automáticamente al usuario si ya está autenticado
-    if (isAuthenticated) {
+    if (user) {
         router.push('/');
         return null; // Opcional: podrías mostrar un spinner de carga mientras se redirige
     }
