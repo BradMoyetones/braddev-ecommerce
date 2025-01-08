@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 
@@ -12,14 +11,17 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import { useRouter } from "next/navigation"
+import { Link } from "next-view-transitions"
 
-
+interface ListItemProps extends React.HTMLProps<HTMLAnchorElement> {
+  className?: string,
+  title: string,
+  href: string,
+  children: React.ReactNode
+}
 
 const  MenuList = () => {
-    const router = useRouter()
     return (
         <NavigationMenu>
             <NavigationMenuList>
@@ -60,10 +62,9 @@ const  MenuList = () => {
                         <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                         {components.map((component) => (
                             <ListItem
-                            key={component.title}
-                            title={component.title}
-                            onClick={() => router.push(component.href)}
-                            // href={component.href}
+                              key={component.title}
+                              title={component.title}
+                              href={component.href}
                             >
                             {component.description}
                             </ListItem>
@@ -79,7 +80,7 @@ const  MenuList = () => {
 export default MenuList
 
 
-const components: { title: string; href: string; description: string }[] = [
+export const components: { title: string; href: string; description: string }[] = [
     {
         title: "Café grano",
         href: "/category/grano",
@@ -101,15 +102,12 @@ const components: { title: string; href: string; description: string }[] = [
 ]
 
 
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
+const ListItem: React.FC<ListItemProps> = ({ className, title, children, href, ...props }) => {
   return (
     <li>
       <NavigationMenuLink asChild>
-        <a
-          ref={ref}
+        <Link
+          href={href}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className
@@ -120,10 +118,9 @@ const ListItem = React.forwardRef<
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>
-        </a>
+        </Link>
       </NavigationMenuLink>
     </li>
   )
-})
-ListItem.displayName = "ListItem"
+}
 

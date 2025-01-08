@@ -9,13 +9,13 @@ import { ProductType } from "@/types/products"
 import { Card, CardContent } from "./ui/card"
 import { Expand, ShoppingCart } from "lucide-react"
 import IconButton from "./IconButton"
-import { useRouter } from "next/navigation"
 import { useCart } from "@/hooks/useCart"
 import TasteOriginProduct from "./shared/TasteOriginProduct"
+import { useTransitionRouter } from "next-view-transitions"
 
 export default function FeaturedProducts() {
     const { error, loading, result }: ResponseType = useGetFeaturedProducts();
-    const router = useRouter();
+    const router = useTransitionRouter();
     const { addItem } = useCart();
 
     return (
@@ -40,7 +40,7 @@ export default function FeaturedProducts() {
                             return (
                                 <CarouselItem key={id} className="md:basis-1/2 lg:basis-1/3 group">
                                     <div className="p-1">
-                                        <Card className="py-4 border border-gray-200 shadow-none">
+                                        <Card className="py-4 shadow-none">
                                             <CardContent className="relative flex items-center justify-center px-6 py-2">
                                                 <img 
                                                     src={`${images.data[0].attributes.url}`} 
