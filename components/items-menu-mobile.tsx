@@ -101,7 +101,7 @@ const ItemsMenuMobile = () => {
                                     })+" w-full !justify-start !items-start flex-col h-max"}
                                 >
                                     <h3>
-                                    {category.attributes.categoryName}
+                                        {category.attributes.categoryName}
                                     </h3>
                                     <p className="line-clamp-2 w-full text-muted-foreground whitespace-normal">
                                         {category.attributes.description}
