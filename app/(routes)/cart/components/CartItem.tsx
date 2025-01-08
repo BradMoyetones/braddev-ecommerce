@@ -22,7 +22,7 @@ export default function CartItem(props: CartItemProps) {
             <div className="flex justify-between flex-1 px-6">
                 <div>
                     <h2 className="text-lg font-bold">{product.attributes.productName}</h2>
-                    <p className="font-bold">{formatPrice(product.attributes.price)}</p>
+                    <p className="font-bold mb-2 sm:mb-0">{formatPrice(product.attributes.price)}</p>
 
                     <TasteOriginProduct taste={product.attributes.taste} origin={product.attributes.origin} />
                 </div>

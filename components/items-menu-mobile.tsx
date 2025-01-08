@@ -22,9 +22,9 @@ const ItemsMenuMobile = () => {
     return ( 
         <Sheet>
             <SheetTrigger>
-                <Menu />
+                <Menu className="size-8" />
             </SheetTrigger>
-            <SheetContent side={"left"}>
+            <SheetContent side={"left"} className="overflow-auto">
                 <SheetHeader>
                     <SheetTitle>Menú</SheetTitle>
                     <SheetDescription>

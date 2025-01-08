@@ -41,13 +41,13 @@ export default function Page() {
 
                     <ul>
                         {items.map((item) => (
-                            <p key={item.id}>
+                            <div key={item.id}>
                                 <CartItem key={item.id} product={item} />
-                            </p>
+                            </div>
                         ))}
                     </ul>
                 </div>
-                <div className="max-w-xl sticky top-14">
+                <div className="max-w-xl sticky top-10">
                     <div className="p-6 rounded-lg bg-slate-100 dark:bg-zinc-900 my-10 sm:my-0 sticky top-24">
                         <p className="mb-3 text-lg font-semibold">
                             Order Summary
