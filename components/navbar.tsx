@@ -1,7 +1,6 @@
 "use client";
 
 import { BaggageClaim, DoorOpen, Heart, ShoppingCart, User } from "lucide-react";
-import { useRouter } from "next/navigation";
 import MenuList from "./MenuList";
 import ItemsMenuMobile from "./items-menu-mobile";
 import ToggleTheme from "./ToggleTheme";
@@ -16,11 +15,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Button } from "./ui/button";
 import { useAuth } from "@/context/AuthContext";
+import { useTransitionRouter } from "next-view-transitions";
 
 export default function Navbar() {
-  const router = useRouter();
+  const router = useTransitionRouter();
   const cart = useCart();
   const { lovedItems } = useLovedProducts();
   const { user, logout } = useAuth();
@@ -30,14 +29,16 @@ export default function Navbar() {
   return (
     <div className="w-full sticky top-0 bg-white dark:bg-black backdrop-filter backdrop-blur-lg bg-opacity-30 dark:bg-opacity-30 z-50">
       <div className="flex items-center justify-between p-4 mx-auto cursor-pointer sm:max-w-4xl md:max-w-6xl ">
-        <h1 className="text-3xl" onClick={() => navigateTo("/")}>
-          Brad<span className="font-bold">Dev</span>
-        </h1>
+        <div className="flex items-center gap-2">
+          <div className="flex sm:hidden">
+            <ItemsMenuMobile />
+          </div>
+          <h1 className="text-3xl" onClick={() => navigateTo("/")}>
+            Brad<span className="font-bold">Dev</span>
+          </h1>
+        </div>
         <div className="items-center justify-between hidden sm:flex">
           <MenuList />
-        </div>
-        <div className="flex sm:hidden">
-          <ItemsMenuMobile />
         </div>
         <div className="flex items-center justify-between gap-2 sm:gap-7">
           {cart.items.length === 0 ? (

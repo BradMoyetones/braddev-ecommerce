@@ -33,7 +33,7 @@ export default function Page() {
     return (
         <div className="max-w-6xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
             <h1 className="mb-5 text-3xl font-bold">Shopping Cart</h1>
-            <div className="grid sm:grid-cols-2 sm:gap-5">
+            <div className="flex sm:grid sm:grid-cols-2 sm:gap-5 flex-col-reverse">
                 <div>
                     {items.length === 0 && (
                         <p>No hay Productos en el carrito</p>
@@ -47,8 +47,8 @@ export default function Page() {
                         ))}
                     </ul>
                 </div>
-                <div className="max-w-xl">
-                    <div className="p-6 rounded-lg bg-slate-100 dark:bg-zinc-900 my-10 sm:my-0">
+                <div className="max-w-xl sticky top-14">
+                    <div className="p-6 rounded-lg bg-slate-100 dark:bg-zinc-900 my-10 sm:my-0 sticky top-24">
                         <p className="mb-3 text-lg font-semibold">
                             Order Summary
                         </p>

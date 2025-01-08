@@ -5,8 +5,7 @@ import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carouse
 import { formatPrice } from "@/lib/formatPrice"
 import { ProductType } from "@/types/products"
 import { Expand, ShoppingCart } from "lucide-react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useTransitionRouter } from "next-view-transitions"
 
 type ProductCardProps = {
     product: ProductType
@@ -14,7 +13,7 @@ type ProductCardProps = {
 
 export default function ProductCard(props: ProductCardProps) {
     const { product } = props
-    const router = useRouter()
+    const router = useTransitionRouter()
 
     return (
         <Card 

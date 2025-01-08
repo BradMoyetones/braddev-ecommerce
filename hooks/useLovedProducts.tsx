@@ -19,9 +19,11 @@ export const useLovedProducts = create(
           const exists = currentLovedItems.some((item) => item.id === data.id);
   
           if (exists) {
+            set({
+              lovedItems: [...currentLovedItems.filter((item) => item.id !== data.id)]
+            })
             return toast({
-              title: "El producto ya está en la lista de favoritos.",
-              variant: "destructive",
+              title: "Producto eliminado de favoritos.",
             });
           }
   
