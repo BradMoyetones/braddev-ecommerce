@@ -46,7 +46,7 @@ export default function CarouselTextBanner() {
             >
                 <CarouselContent>
                     {dataCarouselTop.map(({id, title, link, description}) => (
-                        <CarouselItem key={id} onClick={() => router.push(link)} className="cursor-pointer">
+                        <CarouselItem key={id} onClick={() => router.push(link)} className="cursor-pointer flex items-center justify-center">
                             <div>
                                 <Card className="shadow-none border-none bg-transparent">
                                     <CardContent className="flex flex-col justify-center p-2 items-center text-center">
