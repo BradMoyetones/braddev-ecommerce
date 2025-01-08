@@ -46,7 +46,7 @@ export default function FeaturedProducts() {
                                                     src={`${images.data[0].attributes.url}`} 
                                                     alt="Image featured" 
                                                 />
-                                                <div className="absolute w-full px-6 transition duration-200 opacity-0 group-hover:opacity-100 bottom-5">
+                                                <div className="absolute w-full px-6 transition duration-200 sm:opacity-0 sm:group-hover:opacity-100 bottom-5">
                                                     <div className="flex justify-center gap-x-6">
                                                         <IconButton 
                                                             onClick={() => router.push(`product/${slug}`)} 
@@ -69,8 +69,8 @@ export default function FeaturedProducts() {
                             );
                         })}
                     </CarouselContent>
-                    <CarouselPrevious />
-                    <CarouselNext />
+                    <CarouselPrevious className="sm:flex hidden" />
+                    <CarouselNext className="sm:flex hidden" />
                 </Carousel>
             )}
         </div>
